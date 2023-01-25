@@ -11,7 +11,7 @@
 
 const readline = require('readline-sync');
 
-function prompt(msg, repromptMsg, validator) {
+function prompt(msg, repromptMsg = "Invalid input.", validator = () => true) {
   while (true) {
     let result = readline.question(`=> ${msg}`);
     if (validator(result)) return result;
