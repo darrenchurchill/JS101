@@ -41,6 +41,13 @@ function getInput() {
   return [num1, num2, operation];
 }
 
+function shouldContinue() {
+  let input = prompt("Perform another calculation? [yN]\n");
+  input = input.toLowerCase();
+
+  return input === 'yes' || input === 'y';
+}
+
 function calculate(num1, num2, operation) {
   let output;
   switch (operation) {
@@ -61,7 +68,10 @@ function calculate(num1, num2, operation) {
 }
 
 function doCalculator() {
-  calculate(...getInput());
+  while (true) {
+    calculate(...getInput());
+    if (!shouldContinue()) break;
+  }
 }
 
 console.log('Welcome to the calculator!');
