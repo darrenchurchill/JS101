@@ -41,9 +41,7 @@ function getInput() {
   return [num1, num2, operation];
 }
 
-function doCalculator() {
-  let [num1, num2, operation] = getInput();
-
+function calculate(num1, num2, operation) {
   let output;
   switch (operation) {
     case '1':
@@ -59,8 +57,11 @@ function doCalculator() {
       output = num1 / num2;
       break;
   }
-
   console.log(`The result is ${output}`);
+}
+
+function doCalculator() {
+  calculate(...getInput());
 }
 
 console.log('Welcome to the calculator!');
