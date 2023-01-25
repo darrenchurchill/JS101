@@ -27,32 +27,41 @@ function isValidOperation(opString) {
   return ['1', '2', '3', '4'].includes(opString);
 }
 
-console.log('Welcome to the calculator!');
+function getInput() {
+  const NUM_REPROMPT = "That doesn't look like a valid number.";
+  let num1 = Number(prompt("What's the first number?\n", NUM_REPROMPT, isValidNumber));
+  let num2 = Number(prompt("What's the second number?\n", NUM_REPROMPT, isValidNumber));
 
-const NUM_REPROMPT = "That doesn't look like a valid number.";
-let num1 = Number(prompt("What's the first number?\n", NUM_REPROMPT, isValidNumber));
-let num2 = Number(prompt("What's the second number?\n", NUM_REPROMPT, isValidNumber));
+  let operation = prompt(
+    "What operation would you like to perform\n1) Add 2) Subtract 3) Multiply 4) Divide\n",
+    "Must choose 1, 2, 3, or 4",
+    isValidOperation
+  );
 
-let operation = prompt(
-  "What operation would you like to perform\n1) Add 2) Subtract 3) Multiply 4) Divide\n",
-  "Must choose 1, 2, 3, or 4",
-  isValidOperation
-);
-
-let output;
-switch (operation) {
-  case '1':
-    output = num1 + num2;
-    break;
-  case '2':
-    output = num1 - num2;
-    break;
-  case '3':
-    output = num1 * num2;
-    break;
-  case '4':
-    output = num1 / num2;
-    break;
+  return [num1, num2, operation];
 }
 
-console.log(`The result is ${output}`);
+function doCalculator() {
+  let [num1, num2, operation] = getInput();
+
+  let output;
+  switch (operation) {
+    case '1':
+      output = num1 + num2;
+      break;
+    case '2':
+      output = num1 - num2;
+      break;
+    case '3':
+      output = num1 * num2;
+      break;
+    case '4':
+      output = num1 / num2;
+      break;
+  }
+
+  console.log(`The result is ${output}`);
+}
+
+console.log('Welcome to the calculator!');
+doCalculator();
