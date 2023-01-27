@@ -30,6 +30,11 @@ function isValidNumber(numString) {
   return !Number.isNaN(num) && num >= 0;
 }
 
+function isValidInteger(numString) {
+  return isValidNumber(numString)
+    && Number.isInteger(Number.parseFloat(numString));
+}
+
 function getInput() {
   // get all of the user input for making the calculation
   let loanAmt = Number.parseFloat(prompt(
@@ -45,16 +50,21 @@ function getInput() {
   apr /= 100;
   let durationYrs = Number.parseFloat(prompt(
     "What is the loan duration (years)?\nEnter a whole number. Ex: 3 OR 5",
-    "Loan duration must be a number greater than zero",
-    isValidNumber
+    "Loan duration years must be an integer greater than zero",
+    isValidInteger
+  ));
+  let durationMonths = Number.parseFloat(prompt(
+    "What is the loan duration (months)?\nEnter a whole number. Ex: 10 OR 12",
+    "Loan duration months must be an integer greater than zero",
+    isValidInteger
   ));
 
-  return [loanAmt, apr, durationYrs];
+  return [loanAmt, apr, durationYrs, durationMonths];
 }
 
-function calculateMonthlyPmt(loanAmt, APR, loanYrs) {
+function calculateMonthlyPmt(loanAmt, APR, loanYrs, loanMonths) {
   let monthlyRate = APR / 12;
-  let loanMonths = loanYrs * 12;
+  loanMonths = (loanYrs * 12) + loanMonths;
   if (monthlyRate === 0) return loanAmt / loanMonths;
 
   return loanAmt * (monthlyRate
