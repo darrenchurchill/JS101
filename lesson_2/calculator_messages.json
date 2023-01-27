@@ -1,0 +1,24 @@
+{
+  "en": {
+    "num1Prompt": "What's the first number?",
+    "num2Prompt": "What's the second number?",
+    "invalidNumPrompt": "That doesn't look like a valid number.",
+    "operationPrompt": "What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+    "invalidOperationPrompt": "Must choose 1, 2, 3, or 4",
+    "resultOutput": "The result is",
+    "continuePrompt": "Perform anther calculation?",
+    "continueYesOpt": "y",
+    "continueNoOpt": "n"
+  },
+  "es": {
+    "num1Prompt": "¿Cuál es el primer número?",
+    "num2Prompt": "¿Cuál es el segundo número?",
+    "invalidNumPrompt": "Eso no parece un número válido.",
+    "operationPrompt": "¿Qué operación le gustaría realizar?\n1) Agregar 2) Sustraer 3) Multiplicar 4) Dividir",
+    "invalidOperationPrompt": "Debe elegir 1, 2, 3 o 4",
+    "resultOutput": "El resultado es",
+    "continuePrompt": "¿Realizar otro cálculo?",
+    "continueYesOpt": "s",
+    "continueNoOpt": "n"
+  }
+}

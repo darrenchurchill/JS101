@@ -13,7 +13,7 @@ const readline = require('readline-sync');
 
 function prompt(msg, repromptMsg = "Invalid input.", validator = () => true) {
   while (true) {
-    let result = readline.question(`=> ${msg}`);
+    let result = readline.question(`=> ${msg}\n`);
     if (validator(result)) return result;
     console.log(`\n=> ${repromptMsg}`);
   }
@@ -27,21 +27,33 @@ function isValidOperation(opString) {
   return ['1', '2', '3', '4'].includes(opString);
 }
 
-function getInput() {
-  const NUM_REPROMPT = "That doesn't look like a valid number.";
-  let num1 = Number(prompt("What's the first number?\n", NUM_REPROMPT, isValidNumber));
-  let num2 = Number(prompt("What's the second number?\n", NUM_REPROMPT, isValidNumber));
+function getInput(msgs) {
+  let num1 = Number(
+    prompt(msgs.num1Prompt, msgs.invalidNumPrompt, isValidNumber)
+  );
+  let num2 = Number(
+    prompt(msgs.num2Prompt, msgs.invalidNumPrompt, isValidNumber)
+  );
 
   let operation = prompt(
-    "What operation would you like to perform\n1) Add 2) Subtract 3) Multiply 4) Divide\n",
-    "Must choose 1, 2, 3, or 4",
+    msgs.operationPrompt,
+    msgs.invalidOperationPrompt,
     isValidOperation
   );
 
   return [num1, num2, operation];
 }
 
-function calculate(num1, num2, operation) {
+function shouldContinue(msgs) {
+  let input = prompt(
+    `${msgs.continuePrompt} [${msgs.continueYesOpt}${msgs.continueNoOpt.toUpperCase()}]`
+  );
+  input = input.toLowerCase();
+
+  return input === msgs.continueYesOpt;
+}
+
+function calculate(num1, num2, operation, msgs) {
   let output;
   switch (operation) {
     case '1':
@@ -57,11 +69,17 @@ function calculate(num1, num2, operation) {
       output = num1 / num2;
       break;
   }
-  console.log(`The result is ${output}`);
+  console.log(`${msgs.resultOutput} ${output}\n`);
 }
 
 function doCalculator() {
-  calculate(...getInput());
+  const LANG = process.env.LANG.toLowerCase().split('_')[0];
+  const USER_MSGS = require('./calculator_messages.json')[LANG];
+
+  while (true) {
+    calculate(...getInput(USER_MSGS), USER_MSGS);
+    if (!shouldContinue(USER_MSGS)) break;
+  }
 }
 
 console.log('Welcome to the calculator!');
