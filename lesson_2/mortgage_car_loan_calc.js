@@ -72,10 +72,19 @@ function calculateMonthlyPmt(loanAmt, APR, loanYrs, loanMonths) {
                     / (1 - Math.pow((1 + monthlyRate), (-loanMonths))));
 }
 
+function shouldContinue() {
+  let input = prompt('Perform another calculation? [yN]');
+  input = input.toLowerCase();
+  return input === 'y';
+}
+
 function doCalculator() {
   console.log('Mortgage / Car Loan Calculator:');
-  let pmt = calculateMonthlyPmt(...getInput());
-  console.log(`The monthly payment is $${pmt.toFixed(2)}`);
+  while (true) {
+    let pmt = calculateMonthlyPmt(...getInput());
+    console.log(`The monthly payment is $${pmt.toFixed(2)}`);
+    if (!shouldContinue()) return;
+  }
 }
 
 doCalculator();
