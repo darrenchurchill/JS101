@@ -35,6 +35,7 @@ function isValidInteger(numString) {
     && Number.isInteger(Number.parseFloat(numString));
 }
 
+// eslint-disable-next-line max-lines-per-function
 function getInput() {
   // get all of the user input for making the calculation
   let loanAmt = Number.parseFloat(prompt(
