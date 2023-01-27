@@ -27,7 +27,7 @@ function prompt(msg, repromptMsg = "Invalid input.", validator = () => true) {
 
 function isValidNumber(numString) {
   let num = Number.parseFloat(numString);
-  return !Number.isNaN(num) && num > 0;
+  return !Number.isNaN(num) && num >= 0;
 }
 
 function getInput() {
@@ -55,6 +55,7 @@ function getInput() {
 function calculateMonthlyPmt(loanAmt, APR, loanYrs) {
   let monthlyRate = APR / 12;
   let loanMonths = loanYrs * 12;
+  if (monthlyRate === 0) return loanAmt / loanMonths;
 
   return loanAmt * (monthlyRate
                     / (1 - Math.pow((1 + monthlyRate), (-loanMonths))));
