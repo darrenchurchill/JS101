@@ -16,12 +16,12 @@
 
 const readline = require('readline-sync');
 
-function prompt(msg, validator = () => true) {
+function prompt(msg, repromptMsg = "Invalid input.", validator = () => true) {
   // prompt the user and return the user input
   while (true) {
     let input = readline.question(`=> ${msg}\n`);
     if (validator(input)) return input;
-    console.log("That input isn't valid");
+    console.log(`=> ${repromptMsg}\n`);
   }
 }
 
@@ -32,16 +32,22 @@ function isValidNumber(numString) {
 
 function getInput() {
   // get all of the user input for making the calculation
-  let loanAmt = Number.parseFloat(
-    prompt("What is the loan amount?", isValidNumber)
-  );
-  let apr = Number.parseFloat(
-    prompt("What is the annual interest rate (APR)?", isValidNumber)
-  );
+  let loanAmt = Number.parseFloat(prompt(
+    "What is the loan amount?\nOmit units. Ex: 10000 OR 14000.72",
+    "Loan amount must be a number greater than zero.",
+    isValidNumber
+  ));
+  let apr = Number.parseFloat(prompt(
+    "What is the annual interest rate (APR)? Ex: 5 OR 4.01 OR 4%",
+    "APR must be a number greater than zero.",
+    isValidNumber
+  ));
   apr /= 100;
-  let durationYrs = Number.parseFloat(
-    prompt("What is the loan duration (years)?", isValidNumber)
-  );
+  let durationYrs = Number.parseFloat(prompt(
+    "What is the loan duration (years)?\nEnter a whole number. Ex: 3 OR 5",
+    "Loan duration must be a number greater than zero",
+    isValidNumber
+  ));
 
   return [loanAmt, apr, durationYrs];
 }
