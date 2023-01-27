@@ -73,7 +73,8 @@ function calculate(num1, num2, operation, msgs) {
 }
 
 function doCalculator() {
-  const USER_MSGS = require('./calculator_messages.json');
+  const LANG = process.env.LANG.toLowerCase().split('_')[0];
+  const USER_MSGS = require('./calculator_messages.json')[LANG];
 
   while (true) {
     calculate(...getInput(USER_MSGS), USER_MSGS);
