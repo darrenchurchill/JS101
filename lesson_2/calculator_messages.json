@@ -1,0 +1,11 @@
+{
+  "num1Prompt": "What's the first number?",
+  "num2Prompt": "What's the second number?",
+  "invalidNumPrompt": "That doesn't look like a valid number.",
+  "operationPrompt": "What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+  "invalidOperationPrompt": "Must choose 1, 2, 3, or 4",
+  "resultOutput": "The result is",
+  "continuePrompt": "Perform anther calculation?",
+  "continueYesOpt": "y",
+  "continueNoOpt": "n"
+}
