@@ -57,6 +57,12 @@ function promptUserChoice() {
   return choice;
 }
 
+function getComputerChoice() {
+  let randomIndex = Math.floor(Math.random()
+                    * Object.keys(VALID_CHOICES).length);
+  return Object.keys(VALID_CHOICES)[randomIndex];
+}
+
 function getWinner(userChoice, computerChoice) {
   if (VALID_CHOICES[userChoice].beats.includes(computerChoice)) {
     return GAME_RESULTS.userWin;
@@ -98,10 +104,7 @@ function play(bestOf = 5) {
 
   while (true) {
     let choice = promptUserChoice();
-
-    let randomIndex = Math.floor(Math.random()
-                      * Object.keys(VALID_CHOICES).length);
-    let computerChoice = Object.keys(VALID_CHOICES)[randomIndex];
+    let computerChoice = getComputerChoice();
 
     prompt(`You chose ${choice}, computer chose ${computerChoice}`);
 
