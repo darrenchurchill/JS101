@@ -7,20 +7,20 @@
  */
 
 const readline = require('readline-sync');
-const VALID_CHOICES = ['rock', 'paper', 'scissors'];
+const VALID_CHOICES = {
+  rock: { beats: ['scissors'] },
+  paper: { beats: ['rock'] },
+  scissors: { beats: ['paper'] },
+};
 
 function prompt(msg) {
   console.log(`=> ${msg}`);
 }
 
 function getWinner(userChoice, computerChoice) {
-  if ((userChoice === 'rock' && computerChoice === 'scissors') ||
-      (userChoice === 'paper' && computerChoice === 'rock') ||
-      (userChoice === 'scissors' && computerChoice === 'paper')) {
+  if (VALID_CHOICES[userChoice].beats.includes(computerChoice)) {
     return 'You win!';
-  } else if ((userChoice === 'rock' && computerChoice === 'paper') ||
-            (userChoice === 'paper' && computerChoice === 'scissors') ||
-            (userChoice === 'scissors' && computerChoice === 'rock')) {
+  } else if (VALID_CHOICES[computerChoice].beats.includes(userChoice)) {
     return 'Computer wins!';
   } else {
     return "It's a tie!";
@@ -32,16 +32,17 @@ function displayWinner(userChoice, computerChoice) {
 }
 
 while (true) {
-  prompt(`Choose one: ${VALID_CHOICES.join(', ')}`);
+  prompt(`Choose one: ${Object.keys(VALID_CHOICES).join(', ')}`);
   let choice = readline.question();
 
-  while (!VALID_CHOICES.includes(choice)) {
+  while (!Object.hasOwn(VALID_CHOICES, choice)) {
     prompt("That's not a valid choice");
     choice = readline.question();
   }
 
-  let randomIndex = Math.floor(Math.random() * VALID_CHOICES.length);
-  let computerChoice = VALID_CHOICES[randomIndex];
+  let randomIndex = Math.floor(Math.random()
+                    * Object.keys(VALID_CHOICES).length);
+  let computerChoice = Object.keys(VALID_CHOICES)[randomIndex];
 
   prompt(`You chose ${choice}, computer chose ${computerChoice}`);
   displayWinner(choice, computerChoice);
