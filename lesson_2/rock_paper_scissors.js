@@ -14,6 +14,11 @@ const VALID_CHOICES = {
   lizard: { beats: ['paper', 'spock'], shortOpt: 'l' },
   spock: { beats: ['rock', 'scissors'], shortOpt: 'S' },
 };
+const GAME_RESULTS = {
+  tie: 0,
+  userWin: 1,
+  computerWin: 2,
+};
 
 function isValidChoice(userChoice) {
   return Object.hasOwn(VALID_CHOICES, userChoice);
@@ -54,16 +59,23 @@ function promptUserChoice() {
 
 function getWinner(userChoice, computerChoice) {
   if (VALID_CHOICES[userChoice].beats.includes(computerChoice)) {
-    return 'You win!';
+    return GAME_RESULTS.userWin;
   } else if (VALID_CHOICES[computerChoice].beats.includes(userChoice)) {
-    return 'Computer wins!';
+    return GAME_RESULTS.computerWin;
   } else {
-    return "It's a tie!";
+    return GAME_RESULTS.tie;
   }
 }
 
-function displayWinner(userChoice, computerChoice) {
-  prompt(getWinner(userChoice, computerChoice));
+function displayWinner(gameResult, userWins, computerWins) {
+  let msg = '';
+
+  if (gameResult === GAME_RESULTS.userWin) msg = 'You win!';
+  else if (gameResult === GAME_RESULTS.computerWin) msg = 'Computer wins!';
+  else if (gameResult === GAME_RESULTS.tie) msg = "It's a tie!";
+
+  prompt(msg);
+  prompt(`Current score: User: ${userWins} Computer: ${computerWins}`);
 }
 
 function promptToPlayAgain() {
@@ -80,15 +92,36 @@ function playAnotherGame(userChoice) {
   return userChoice === 'y';
 }
 
+function play(bestOf = 5) {
+  let userWins = 0;
+  let computerWins = 0;
+
+  while (true) {
+    let choice = promptUserChoice();
+
+    let randomIndex = Math.floor(Math.random()
+                      * Object.keys(VALID_CHOICES).length);
+    let computerChoice = Object.keys(VALID_CHOICES)[randomIndex];
+
+    prompt(`You chose ${choice}, computer chose ${computerChoice}`);
+
+    let result = getWinner(choice, computerChoice);
+
+    if (result === GAME_RESULTS.userWin) userWins += 1;
+    else if (result === GAME_RESULTS.computerWin) computerWins += 1;
+    displayWinner(result, userWins, computerWins);
+
+    if (userWins * 2 > bestOf) {
+      prompt(`You win the best of ${bestOf} games!!!`);
+      return;
+    } else if (computerWins * 2 > bestOf) {
+      prompt(`Computer wins the best of ${bestOf} games!!!`);
+      return;
+    }
+  }
+}
+
 while (true) {
-  let choice = promptUserChoice();
-
-  let randomIndex = Math.floor(Math.random()
-                    * Object.keys(VALID_CHOICES).length);
-  let computerChoice = Object.keys(VALID_CHOICES)[randomIndex];
-
-  prompt(`You chose ${choice}, computer chose ${computerChoice}`);
-  displayWinner(choice, computerChoice);
-
+  play();
   if (!playAnotherGame(promptToPlayAgain())) break;
 }
