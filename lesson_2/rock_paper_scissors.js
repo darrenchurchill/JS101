@@ -19,6 +19,17 @@ function prompt(msg) {
   console.log(`=> ${msg}`);
 }
 
+function promptUserChoice() {
+  prompt(`Choose one: ${Object.keys(VALID_CHOICES).join(', ')}`);
+  let choice = readline.question();
+
+  while (!Object.hasOwn(VALID_CHOICES, choice)) {
+    prompt("That's not a valid choice");
+    choice = readline.question();
+  }
+  return choice;
+}
+
 function getWinner(userChoice, computerChoice) {
   if (VALID_CHOICES[userChoice].beats.includes(computerChoice)) {
     return 'You win!';
@@ -34,13 +45,7 @@ function displayWinner(userChoice, computerChoice) {
 }
 
 while (true) {
-  prompt(`Choose one: ${Object.keys(VALID_CHOICES).join(', ')}`);
-  let choice = readline.question();
-
-  while (!Object.hasOwn(VALID_CHOICES, choice)) {
-    prompt("That's not a valid choice");
-    choice = readline.question();
-  }
+  let choice = promptUserChoice();
 
   let randomIndex = Math.floor(Math.random()
                     * Object.keys(VALID_CHOICES).length);
