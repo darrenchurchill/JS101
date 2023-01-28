@@ -8,9 +8,11 @@
 
 const readline = require('readline-sync');
 const VALID_CHOICES = {
-  rock: { beats: ['scissors'] },
-  paper: { beats: ['rock'] },
-  scissors: { beats: ['paper'] },
+  rock: { beats: ['scissors', 'lizard'] },
+  paper: { beats: ['rock', 'spock'] },
+  scissors: { beats: ['paper', 'lizard'] },
+  lizard: { beats: ['paper', 'spock'] },
+  spock: { beats: ['rock', 'scissors'] },
 };
 
 function prompt(msg) {
