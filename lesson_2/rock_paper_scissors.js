@@ -15,6 +15,10 @@ const VALID_CHOICES = {
   spock: { beats: ['rock', 'scissors'] },
 };
 
+function isValidChoice(userChoice) {
+  return Object.hasOwn(VALID_CHOICES, userChoice);
+}
+
 function prompt(msg) {
   console.log(`=> ${msg}`);
 }
@@ -23,7 +27,7 @@ function promptUserChoice() {
   prompt(`Choose one: ${Object.keys(VALID_CHOICES).join(', ')}`);
   let choice = readline.question();
 
-  while (!Object.hasOwn(VALID_CHOICES, choice)) {
+  while (!isValidChoice(choice)) {
     prompt("That's not a valid choice");
     choice = readline.question();
   }
