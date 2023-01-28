@@ -66,6 +66,20 @@ function displayWinner(userChoice, computerChoice) {
   prompt(getWinner(userChoice, computerChoice));
 }
 
+function promptToPlayAgain() {
+  prompt('Do you want to play again (y/n)?');
+  let answer = readline.question().toLowerCase();
+  while (answer[0] !== 'n' && answer[0] !== 'y') {
+    prompt('Please enter "y" or "n".');
+    answer = readline.question().toLowerCase();
+  }
+  return answer;
+}
+
+function playAnotherGame(userChoice) {
+  return userChoice === 'y';
+}
+
 while (true) {
   let choice = promptUserChoice();
 
@@ -76,12 +90,5 @@ while (true) {
   prompt(`You chose ${choice}, computer chose ${computerChoice}`);
   displayWinner(choice, computerChoice);
 
-  prompt('Do you want to play again (y/n)?');
-  let answer = readline.question().toLowerCase();
-  while (answer[0] !== 'n' && answer[0] !== 'y') {
-    prompt('Please enter "y" or "n".');
-    answer = readline.question().toLowerCase();
-  }
-
-  if (answer[0] !== 'y') break;
+  if (!playAnotherGame(promptToPlayAgain())) break;
 }
