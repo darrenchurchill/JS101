@@ -8,15 +8,27 @@
 
 const readline = require('readline-sync');
 const VALID_CHOICES = {
-  rock: { beats: ['scissors', 'lizard'] },
-  paper: { beats: ['rock', 'spock'] },
-  scissors: { beats: ['paper', 'lizard'] },
-  lizard: { beats: ['paper', 'spock'] },
-  spock: { beats: ['rock', 'scissors'] },
+  rock: { beats: ['scissors', 'lizard'], shortOpt: 'r' },
+  paper: { beats: ['rock', 'spock'], shortOpt: 'p' },
+  scissors: { beats: ['paper', 'lizard'], shortOpt: 's' },
+  lizard: { beats: ['paper', 'spock'], shortOpt: 'l' },
+  spock: { beats: ['rock', 'scissors'], shortOpt: 'S' },
 };
 
 function isValidChoice(userChoice) {
   return Object.hasOwn(VALID_CHOICES, userChoice);
+}
+
+function parseChoiceString(userChoice) {
+  // Object with structure {shortOpt: LongOpt}, ex: {r: 'rock',...}
+  let shortChoices = Object.fromEntries(
+    Object.keys(VALID_CHOICES).map((el) => {
+      return [VALID_CHOICES[el].shortOpt, el];
+    })
+  );
+
+  if (userChoice.length === 1) return shortChoices[userChoice];
+  return userChoice;
 }
 
 function prompt(msg) {
@@ -24,12 +36,18 @@ function prompt(msg) {
 }
 
 function promptUserChoice() {
-  prompt(`Choose one: ${Object.keys(VALID_CHOICES).join(', ')}`);
-  let choice = readline.question();
+  let choiceOptions = "";
+  for (let choice in VALID_CHOICES) {
+    choiceOptions += `${choice} (${VALID_CHOICES[choice].shortOpt}), `;
+  }
+  choiceOptions = choiceOptions.slice(0, choiceOptions.length - 2);
+
+  prompt(`Choose one: ${choiceOptions}`);
+  let choice = parseChoiceString(readline.question());
 
   while (!isValidChoice(choice)) {
     prompt("That's not a valid choice");
-    choice = readline.question();
+    choice = parseChoiceString(readline.question());
   }
   return choice;
 }
