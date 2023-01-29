@@ -16,11 +16,11 @@
  */
 
 let numbers = [1, 2, 3, 4, 5];
-let reversed = numbers.map((el) => el).reverse();
+let reversed = numbers.slice().reverse();
 console.log(numbers);
 console.log(reversed);
 
-let sorted = numbers.map((el) => el).sort((num1, num2) => num2 - num1);
+let sorted = [...numbers].sort((num1, num2) => num2 - num1);
 console.log(numbers);
 console.log(sorted);
 
