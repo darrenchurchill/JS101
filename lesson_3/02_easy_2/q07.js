@@ -13,11 +13,8 @@
 
 let flintstones = { Fred: 0, Wilma: 1, Barney: 2, Betty: 3, Bambam: 4, Pebbles: 5 };
 
-
-let barney = [];
-
-for (let [name, number] of Object.entries(flintstones)) {
-  if (name === 'Barney') barney.push(name, number);
-}
+let barney = Object.entries(flintstones)
+  .filter(([name, _]) => name === 'Barney' )
+  .flat();
 
 console.log(barney);
